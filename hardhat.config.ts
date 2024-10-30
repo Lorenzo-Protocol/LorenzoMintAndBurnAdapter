@@ -22,7 +22,17 @@ const config: HardhatUserConfig = {
       chainId: 11155111,
       url: process.env.SEPOLIA_RPC_URL || '',
       accounts: [deployer],
-    }
+    },
+    mainnet: {
+      chainId: 1,
+      url: process.env.ETH_MAINNET_RPC_URL || '',
+      accounts: [deployer],
+    },
+    bsc: {
+      chainId: 56,
+      url: process.env.BSC_MAINNET_RPC_URL || '',
+      accounts: [deployer],
+    },
   },
   namedAccounts: {
     deployer: {

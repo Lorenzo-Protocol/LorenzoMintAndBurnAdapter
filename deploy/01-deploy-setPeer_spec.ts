@@ -1,11 +1,9 @@
 /* Imports: Internal */
 import { DeployFunction } from 'hardhat-deploy/dist/types'
-import { ethers, getNamedAccounts } from 'hardhat'
-//import { ethers } from 'ethers'
+import { ethers } from 'hardhat'
 
 const deployFn: DeployFunction = async (hre) => {
     const signer = (await ethers.getSigners())[0]
-    console.log(`Deploying from ${signer.address}`)
     
     const sepPeerId = 40161
     const sepLorenzoOFTaddress = "0xF0b7c988f1d5F993C9AEa1Ee23F220791f23b645"
