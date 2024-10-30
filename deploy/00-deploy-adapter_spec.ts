@@ -10,7 +10,7 @@ const deployFn: DeployFunction = async (hre) => {
     console.log(`Deploying from ${deployer}`)
 
     const stBTCAddress = "0x2a45dE58552F2C5E0597d1FbB8eC83F7E2dDBa0D"
-    const mintableContractAddress = "0xcF93cD03eD618A31688860e01F450f9989764e87"
+    const mintableContractAddress = "0xD871696c9EA3ca9FD5258E33d093d504b7cB2DAB" //"0xcF93cD03eD618A31688860e01F450f9989764e87"
     const endpointV2DeploymentAddress = "0x6EDCE65403992e310A62460808c4b910D972f10f"
 
     const { address } = await deploy("LorenzoMintBurnOFTAdapter", {

@@ -8,13 +8,13 @@ const deployFn: DeployFunction = async (hre) => {
     console.log(`Deploying from ${signer.address}`)
     
     const sepPeerId = 40161
-    const sepLorenzoOFTaddress = "0x71d7EDFEBA63594E8eb61E1EFeE72510991a20Ed"
+    const sepLorenzoOFTaddress = "0xF0b7c988f1d5F993C9AEa1Ee23F220791f23b645"
 
-    const bscPeerId = 40102
-    const bscLorenzoOFTAddress = "0xDe6c99850dc2253068d3e2B5815D4f346593aF93"
+    const bscTestnetPeerId = 40102
+    const bscTestnetLorenzoOFTAddress = "0xC50bfC71BF0bB90E316a3F21CC51826c8FaB192d"
 
-    const lzMBAdapterContract = await ethers.getContractAt('LorenzoMintBurnOFTAdapter', bscLorenzoOFTAddress, signer)
-    const tx = await lzMBAdapterContract.connect(signer).setPeer(sepPeerId, ethers.utils.zeroPad(sepLorenzoOFTaddress, 32))
+    const lzMBAdapterContract = await ethers.getContractAt('LorenzoMintBurnOFTAdapter', sepLorenzoOFTaddress, signer)
+    const tx = await lzMBAdapterContract.connect(signer).setPeer(bscTestnetPeerId, ethers.utils.zeroPad(bscTestnetLorenzoOFTAddress, 32))
     await tx.wait()
 
     console.log(`Set peer ${sepPeerId} to ${sepLorenzoOFTaddress}`)

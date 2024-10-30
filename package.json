@@ -1,6 +1,7 @@
 {
   "name": "hardhat-project",
   "devDependencies": {
+    "@layerzerolabs/lz-v2-utilities": "^3.0.7",
     "@layerzerolabs/oft-evm": "^0.1.0",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
     "@nomicfoundation/hardhat-verify": "^2.0.11",
