@@ -24,8 +24,20 @@ const deployFn: DeployFunction = async (hre) => {
 
     const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString()
     const tokensToSend = ethers.utils.parseEther('0.023')
+    let oappAddress
+    let remoteEid
+    const chainid = await hre.getChainId()
+    if (chainid.toString() == "11155111") {
+        oappAddress = sepLorenzoOFTaddress
+        remoteEid = bscTestnetPeerId
+    } else {
+        oappAddress = bscLorenzoOFTAddress
+        remoteEid = sepPeerId
+    }
+
+
     const sendParam = [
-        sepPeerId,
+        remoteEid,
         ethers.utils.zeroPad(signer.address, 32),
         tokensToSend,
         tokensToSend,
@@ -33,7 +45,7 @@ const deployFn: DeployFunction = async (hre) => {
         '0x',
         '0x',
     ]
-    const lzMBAdapterContract = await ethers.getContractAt('LorenzoMintBurnOFTAdapter', bscLorenzoOFTAddress, signer)
+    const lzMBAdapterContract = await ethers.getContractAt('LorenzoMintBurnOFTAdapter', oappAddress, signer)
     // Fetching the native fee for the token send operation
     const [nativeFee] = await lzMBAdapterContract.connect(signer).quoteSend(sendParam, false)
     console.log(`Native fee: ${nativeFee}`)
