@@ -22,7 +22,7 @@ const deployFn: DeployFunction = async (hre) => {
     const sepEid = 40161; // ethereum sep Chain
     const bscTestEid = 40102 // BSC testnet Chain
 
-    //const executorConfigType = 1; // 1 for executor
+    const executorConfigType = 1; // 1 for executor
     const ulnConfigType = 2; // 2 for UlnConfig
 
     let oappAddress
@@ -41,18 +41,18 @@ const deployFn: DeployFunction = async (hre) => {
         remoteEid = sepEid
         receiveLibAddress = bscTestnetReceiveLibAddress
     }
-    // const sendExecutorConfigBytes = await lzEndpointContract.getConfig(
-    //     oappAddress,
-    //     sendLibAddress,
-    //     remoteEid,
-    //     executorConfigType,
-    // );
-    // const executorConfigAbi = ['tuple(uint32 maxMessageSize, address executorAddress)'];
-    // const executorConfigArray = ethers.utils.defaultAbiCoder.decode(
-    //   executorConfigAbi,
-    //   sendExecutorConfigBytes,
-    // );
-    // console.log('Send Library Executor Config:', executorConfigArray);
+    const sendExecutorConfigBytes = await lzEndpointContract.getConfig(
+        oappAddress,
+        sendLibAddress,
+        remoteEid,
+        executorConfigType,
+    );
+    const executorConfigAbi = ['tuple(uint32 maxMessageSize, address executorAddress)'];
+    const executorConfigArray = ethers.utils.defaultAbiCoder.decode(
+      executorConfigAbi,
+      sendExecutorConfigBytes,
+    );
+    console.log('Send Library Executor Config:', executorConfigArray);
 
     const sendUlnConfigBytes = await lzEndpointContract.getConfig(
         oappAddress,

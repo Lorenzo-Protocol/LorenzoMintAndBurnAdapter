@@ -7,8 +7,8 @@ const deployFn: DeployFunction = async (hre) => {
     const signer = (await ethers.getSigners())[0]
     const lzEndpointAddress = '0x6EDCE65403992e310A62460808c4b910D972f10f';
     const lzEndpointABI = [
-        'function setSendLibrary(address oapp, uint32 eid, address sendLib) external',
-        'function setReceiveLibrary(address oapp, uint32 eid, address receiveLib) external',
+        'function setSendLibrary(address _oapp, uint32 _eid, address _newLib) external',
+        'function setReceiveLibrary(address _oapp, uint32 _eid, address _newLib, uint256 _gracePeriod) external',
     ];
 
     const lzEndpointContract = new ethers.Contract(lzEndpointAddress, lzEndpointABI, signer);
@@ -55,6 +55,7 @@ const deployFn: DeployFunction = async (hre) => {
         oappAddress,
         remoteEid,
         receiveLibAddress,
+        0
     );
     console.log('Receive library transaction sent:', receiveTx.hash);
     await receiveTx.wait();

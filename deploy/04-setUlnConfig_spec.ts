@@ -36,15 +36,15 @@ const deployFn: DeployFunction = async (hre) => {
         sendLibAddress = sepSendLibAddress
         remoteEid = bscTestEid
         receiveLibAddress = sepReceiveLibAddress
-        dvnAddress1 = '0x715a4451be19106bb7cefd81e507813e23c30768'
-        dvnAddress2 = '0x8eebf8b423b73bfca51a1db4b7354aa0bfca9193'
+        dvnAddress1 = '0x8eebf8b423b73bfca51a1db4b7354aa0bfca9193'
+        dvnAddress2 = '0xca7a736be0fe968a33af62033b8b36d491f7999b'
     } else {
         oappAddress = bscLorenzoOFTAddress
         sendLibAddress = bscTestnetSendLibAddress
         remoteEid = sepEid
         receiveLibAddress = bscTestnetReceiveLibAddress
         dvnAddress1 = '0x0ee552262f7b562efced6dd4a7e2878ab897d405'
-        dvnAddress2 = '0x6334290b7b4a365f3c0e79c85b1b42f078db78e4'
+        dvnAddress2 = '0x35fa068ec18631719a7f6253710ba29ab5c5f3b7'
     }
 
     const ulnConfig = {

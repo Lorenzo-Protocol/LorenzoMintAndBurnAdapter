@@ -23,7 +23,7 @@ const deployFn: DeployFunction = async (hre) => {
     // console.log(`Approved ${sepLorenzoOFTaddress} to spend 10000 stBTC`)
 
     const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString()
-    const tokensToSend = ethers.utils.parseEther('0.023')
+    const tokensToSend = ethers.utils.parseEther('0.00032')
     let oappAddress
     let remoteEid
     const chainid = await hre.getChainId()
@@ -51,9 +51,9 @@ const deployFn: DeployFunction = async (hre) => {
     console.log(`Native fee: ${nativeFee}`)
 
     //send tokens
-    // const ctx = await lzMBAdapterContract.send(sendParam, [nativeFee, 0], signer.address, { value: nativeFee })
-    // await ctx.wait()
-    // console.log(`Tokens sent successfully`)
+    const ctx = await lzMBAdapterContract.send(sendParam, [nativeFee, 0], signer.address, { value: nativeFee })
+    await ctx.wait()
+    console.log(`Tokens sent successfully`)
 }
 
 // This is kept during an upgrade. So no upgrade tag.
