@@ -4,6 +4,7 @@ pragma solidity 0.8.20;
 import {IERC20Metadata, IERC20} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import {OFTCore} from "@layerzerolabs/oft-evm/contracts/OFTCore.sol";
 import {IMintableBurnable} from "./interfaces/IMintableBurnable.sol";
+import {IstBTC} from "./interfaces/IstBTC.sol";
 import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
 abstract contract MintBurnOFTAdapter is OFTCore {
@@ -12,12 +13,11 @@ abstract contract MintBurnOFTAdapter is OFTCore {
 
     constructor(
         address _token,
-        IMintableBurnable _minterBurner,
         address _lzEndpoint,
         address _delegate
     ) OFTCore(IERC20Metadata(_token).decimals(), _lzEndpoint, _delegate) {
         innerToken = IERC20(_token);
-        minterBurner = _minterBurner;
+        minterBurner = IMintableBurnable(IstBTC(_token)._minter_contract());
     }
 
     /**
