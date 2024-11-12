@@ -1,21 +1,21 @@
 /* Imports: Internal */
 import { DeployFunction } from 'hardhat-deploy/dist/types'
 import { ethers } from 'hardhat'
+import { getAdapterAddress } from '../scripts/getParams'
 
 const deployFn: DeployFunction = async (hre) => {
     const signer = (await ethers.getSigners())[0]
     
-    const sepPeerId = 40161
-    const sepLorenzoOFTaddress = "0xF0b7c988f1d5F993C9AEa1Ee23F220791f23b645"
+    const peerEids = [30102]
+    const adapterAddress = getAdapterAddress()
 
-    const bscTestnetPeerId = 40102
-    const bscTestnetLorenzoOFTAddress = "0xC50bfC71BF0bB90E316a3F21CC51826c8FaB192d"
+    const lzMBAdapterContract = await ethers.getContractAt('LorenzoMintBurnOFTAdapter', adapterAddress, signer)
 
-    const lzMBAdapterContract = await ethers.getContractAt('LorenzoMintBurnOFTAdapter', sepLorenzoOFTaddress, signer)
-    const tx = await lzMBAdapterContract.connect(signer).setPeer(bscTestnetPeerId, ethers.utils.zeroPad(bscTestnetLorenzoOFTAddress, 32))
-    await tx.wait()
-
-    console.log(`Set peer ${sepPeerId} to ${sepLorenzoOFTaddress}`)
+    for (var peerId of peerEids) {
+        const tx = await lzMBAdapterContract.connect(signer).setPeer(peerId, ethers.utils.zeroPad(adapterAddress, 32))
+        await tx.wait()
+        console.log(`Set peer ${peerId} to ${adapterAddress}`)
+    }
 }
 
 // This is kept during an upgrade. So no upgrade tag.

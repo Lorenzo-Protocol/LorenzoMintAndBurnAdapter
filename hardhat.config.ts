@@ -33,6 +33,11 @@ const config: HardhatUserConfig = {
       url: process.env.BSC_MAINNET_RPC_URL || '',
       accounts: [deployer],
     },
+    taiko: {
+      chainId: 167000,
+      url: process.env.TAIKO_MAINNET_RPC_URL || '',
+      accounts: [deployer],
+    },
   },
   namedAccounts: {
     deployer: {
@@ -42,7 +47,9 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: {
       sepolia: process.env.ETH_API_KEY!,
+      mainnet: process.env.ETH_API_KEY!,
       bscTestnet: process.env.BSC_API_KEY!,
+      bsc: process.env.BSC_API_KEY!,
     }
   }
 };

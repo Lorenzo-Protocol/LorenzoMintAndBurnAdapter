@@ -1,50 +1,34 @@
 /* Imports: Internal */
 import { DeployFunction } from 'hardhat-deploy/dist/types'
 import { ethers } from 'hardhat'
+import { getAdapterAddress, getEndpointV2, getLzDVNAddress, getLzEid } from '../scripts/getParams';
 
 const deployFn: DeployFunction = async (hre) => {
 
     const signer = (await ethers.getSigners())[0]
-    const lzEndpointAddress = '0x6EDCE65403992e310A62460808c4b910D972f10f';
     const lzEndpointABI = [
         'function setConfig(address oappAddress, address sendLibAddress, tuple(uint32 eid, uint32 configType, bytes config)[] setConfigParams) external',
     ];
 
-    const lzEndpointContract = new ethers.Contract(lzEndpointAddress, lzEndpointABI, signer);
-    // Define the addresses and parameters
-    const sepLorenzoOFTaddress = "0xF0b7c988f1d5F993C9AEa1Ee23F220791f23b645"
-    const bscLorenzoOFTAddress = "0xC50bfC71BF0bB90E316a3F21CC51826c8FaB192d"
-    
-    const sepSendLibAddress = '0xcc1ae8Cf5D3904Cef3360A9532B477529b177cCE';
-    const sepReceiveLibAddress = '0xdAf00F5eE2158dD58E0d3857851c432E34A3A851';
-    const bscTestnetSendLibAddress = '0x55f16c442907e86D764AFdc2a07C2de3BdAc8BB7'
-    const bscTestnetReceiveLibAddress = '0x188d4bbCeD671A7aA2b5055937F79510A32e9683'
-    // const sepExecutorAddress = '0x718B92b5CB0a5552039B593faF724D182A881eDA'
-    // const bscTestnetExecutorAddress = '0x31894b190a8bAbd9A067Ce59fde0BfCFD2B18470'
-    const sepEid = 40161; // ethereum sep Chain
-    const bscTestEid = 40102 // BSC testnet Chain
+    const networkConfig = getEndpointV2(hre.network.name);
+    const lzEndpointAddress = networkConfig.endpointV2;
 
-    let oappAddress
-    let sendLibAddress
-    let remoteEid
-    let receiveLibAddress
-    let dvnAddress1
-    let dvnAddress2
-    const chainid = await hre.getChainId()
-    if (chainid.toString() == "11155111") {
-        oappAddress = sepLorenzoOFTaddress
-        sendLibAddress = sepSendLibAddress
-        remoteEid = bscTestEid
-        receiveLibAddress = sepReceiveLibAddress
-        dvnAddress1 = '0x8eebf8b423b73bfca51a1db4b7354aa0bfca9193'
-        dvnAddress2 = '0xca7a736be0fe968a33af62033b8b36d491f7999b'
-    } else {
-        oappAddress = bscLorenzoOFTAddress
-        sendLibAddress = bscTestnetSendLibAddress
-        remoteEid = sepEid
-        receiveLibAddress = bscTestnetReceiveLibAddress
-        dvnAddress1 = '0x0ee552262f7b562efced6dd4a7e2878ab897d405'
-        dvnAddress2 = '0x35fa068ec18631719a7f6253710ba29ab5c5f3b7'
+    const lzEndpointContract = new ethers.Contract(lzEndpointAddress, lzEndpointABI, signer);
+    const oappAddress = getAdapterAddress()
+    const sendLibAddress = networkConfig.sendUln302;
+    const receiveLibAddress = networkConfig.receiveUln302;
+
+    const remoteChainId = 1
+    let remoteEid = getLzEid(remoteChainId)
+    if (remoteEid == 0) { 
+        console.log('EID not found for chainId:', remoteChainId)
+        return
+    }
+
+    const dvns = getLzDVNAddress()
+    if (dvns.length == 0) {
+        console.log('DVNs not found')
+        return
     }
 
     const ulnConfig = {
@@ -52,7 +36,7 @@ const deployFn: DeployFunction = async (hre) => {
         requiredDVNCount: 2, // Example value, replace with actual
         optionalDVNCount: 0, // Example value, replace with actual
         optionalDVNThreshold: 0, // Example value, replace with actual
-        requiredDVNs: [dvnAddress1, dvnAddress2], // Replace with actual addresses
+        requiredDVNs: dvns, // Replace with actual addresses
         optionalDVNs: [], // Replace with actual addresses
     };
 
@@ -82,7 +66,7 @@ const deployFn: DeployFunction = async (hre) => {
         requiredDVNCount: 2, // Example value, replace with actual
         optionalDVNCount: 0, // Example value, replace with actual
         optionalDVNThreshold: 0, // Example value, replace with actual
-        requiredDVNs: [dvnAddress1, dvnAddress2], // Replace with actual addresses
+        requiredDVNs: dvns, // Replace with actual addresses
         optionalDVNs: [], // Replace with actual addresses
     };
     const receiveEncodedUlnConfig = ethers.utils.defaultAbiCoder.encode([configTypeUlnStruct], [receiveUlnConfig]);

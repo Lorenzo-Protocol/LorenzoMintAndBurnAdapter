@@ -12,7 +12,8 @@ const deployFn: DeployFunction = async (hre) => {
     console.log(`Deploying from ${deployer}`)
 
     const stBTCAddress = getStBtcAddress();
-    const endpointV2DeploymentAddress = getEndpointV2(hre.network.name);
+    const networkConfig = getEndpointV2(hre.network.name);
+    const endpointV2DeploymentAddress = networkConfig.endpointV2;
     console.log(`stBTCAddress: ${stBTCAddress}, endpointV2DeploymentAddress: ${endpointV2DeploymentAddress}`)
 
     const deployerNonce = await hre.ethers.provider.getTransactionCount(deployer)
