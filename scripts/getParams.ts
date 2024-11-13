@@ -80,18 +80,20 @@ export function getLzEid(chainId: number): number {
 }
 
 
-export function getLzDVNAddress(): string[] {
+export function getLzDVNAddress(remoteChainId: number): string[] {
     const chainId = hre.network.config.chainId || 31337;
     let dvns: string[] = []
-    if (chainId === 56) {
-        dvns = [
-            '0x247624e2143504730aec22912ed41f092498bef2', '0xfd6865c841c2d64565562fcc7e05e619a30615f0'
-        ]
+    if (chainId === 56 && remoteChainId === 167000) {
+        dvns = ['0x247624e2143504730aec22912ed41f092498bef2', '0xfd6865c841c2d64565562fcc7e05e619a30615f0']
     } else if (chainId === 167000){
         dvns = ['0xbd237ef21319e2200487bdf30c188c6c34b16d3b', '0xc097ab8cd7b053326dfe9fb3e3a31a0cce3b526f']
-    } else if (chainId === 1){
+    } else if (chainId === 1 && remoteChainId === 167000){
         dvns = ['0x380275805876ff19055ea900cdb2b46a94ecf20d', '0x589dedbd617e0cbcb916a9223f4d1300c294236b']
-    }
+    } else if (chainId === 1 && remoteChainId === 56) {
+        dvns = ['0x589dedbd617e0cbcb916a9223f4d1300c294236b', '0x8ddf05f9a5c488b4973897e278b58895bf87cb24']
+    } else if (chainId === 56 && remoteChainId === 1) {
+        dvns = ['0x8ddf05f9a5c488b4973897e278b58895bf87cb24', '0xfd6865c841c2d64565562fcc7e05e619a30615f0']
+    } 
     return dvns
 }
 

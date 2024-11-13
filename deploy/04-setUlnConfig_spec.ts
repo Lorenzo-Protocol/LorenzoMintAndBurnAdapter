@@ -25,7 +25,7 @@ const deployFn: DeployFunction = async (hre) => {
         return
     }
 
-    const dvns = getLzDVNAddress()
+    const dvns = getLzDVNAddress(remoteChainId)
     if (dvns.length == 0) {
         console.log('DVNs not found')
         return
