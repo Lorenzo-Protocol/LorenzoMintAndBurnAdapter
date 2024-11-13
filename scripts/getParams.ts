@@ -115,11 +115,11 @@ export function getEndpointV2(network: string): NetworkConfig {
         const rawData = fs.readFileSync(path.join(__dirname, './lz-chain-deployments.json'), 'utf8');
         const configs: Configurations = JSON.parse(rawData);
 
-        if (!(network in configs)) {
-            throw new Error(`Network ${network} not found in configuration`);
-        }
         if (network === 'mainnet') {
             network = 'ethereum'
+        }
+        if (!(network in configs)) {
+            throw new Error(`Network ${network} not found in configuration`);
         }
 
         return configs[network];
