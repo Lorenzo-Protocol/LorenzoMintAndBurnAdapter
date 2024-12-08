@@ -21,7 +21,8 @@ export function getStBtcAddress(): string {
         chainId === 4200 || // Merlin Mainnet
         chainId === 11501 ||  // BEVM Mainnet
         chainId === 167000 ||  // Taiko Mainnet
-        chainId === 34443  // Mode Mainnet
+        chainId === 34443 || // Mode Mainnet
+        chainId === 1923 // Swell Mainnet
     ) {
       stBTCAddress = MAINNET_STBTC_ADDRESS
     } else {
