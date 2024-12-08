@@ -1,6 +1,6 @@
 /* Imports: Internal */
 import { DeployFunction } from 'hardhat-deploy/dist/types'
-import { getEndpointV2, getStBtcAddress } from '../scripts/getParams'
+import { getAdapterAddress, getEndpointV2, getStBtcAddress } from '../scripts/getParams'
 import {getContractAddress} from '@ethersproject/address';
 
 const deployFn: DeployFunction = async (hre) => {
@@ -22,7 +22,7 @@ const deployFn: DeployFunction = async (hre) => {
       nonce: deployerNonce
     })
     console.log(`lorenzoMintBurnOFTAdapterAddress will be: ${lorenzoMintBurnOFTAdapterAddress}`)
-    const expectLorenzoMintBurnOFTAdapterAddress = ''
+    const expectLorenzoMintBurnOFTAdapterAddress = getAdapterAddress()
 
     if (lorenzoMintBurnOFTAdapterAddress.toLowerCase() == expectLorenzoMintBurnOFTAdapterAddress.toLowerCase()) {
         const { address } = await deploy("LorenzoMintBurnOFTAdapter", {

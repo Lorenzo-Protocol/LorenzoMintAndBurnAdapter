@@ -1283,6 +1283,14 @@
         "receiveUln301": "0x073f5b4FdF17BBC16b0980d49f6C56123477bb51",
         "receiveUln302": "0xcF1B0F4106B0324F96fEfcC31bA9498caa80701C"
     },
+    "swell": {
+        "executor": "0xa20DB4Ffe74A31D17fc24BD32a7DD7555441058e",
+        "endpointV2": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa",
+        "sendUln301": "0xe1844c5D63a9543023008D332Bd3d2e6f1FE1043",
+        "sendUln302": "0xc1B621b18187F74c8F6D52a6F709Dd2780C09821",
+        "receiveUln301": "0xfd76d9CB0Bac839725aB79127E7411fe71b1e3CA",
+        "receiveUln302": "0x377530cdA84DFb2673bF4d145DCF0C4D7fdcB5b6"
+    },
     "taiko": {
         "executor": "0xa20DB4Ffe74A31D17fc24BD32a7DD7555441058e",
         "endpointV2": "0x1a44076050125825900e736c501f859c50fE728c",
